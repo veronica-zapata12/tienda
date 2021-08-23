@@ -1,0 +1,9 @@
+server:
+  port: 8095
+sipring:
+  cloud:
+    config:
+      server:
+        git:
+          uri:
+          searchPath: config-data

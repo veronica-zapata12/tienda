@@ -1,0 +1,31 @@
+server:
+  port: 8092
+spring:
+  h2:
+    console:
+      enabled:true
+  datasource:
+    Url: jdbc:postgresql://localhost:5432/productos
+    driverClassName: org.postgresql.Driver
+    platform: postgres
+    username: postgres
+    password: 12345
+    #initialization-mode: always
+
+
+
+  jpa:
+    show.sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        use_sql_comments: false
+        format_sql: false
+
+loggin:
+  pattern:
+    console: "%{yyyy-mm-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5P} %M%N"
+
