@@ -7,8 +7,8 @@ sipring:
         git:
           uri: https://github.com/veronica-zapata12/tienda.git
           searchPaths: config-data
-          username: veronica-zapata12
-          password: Sofiazapata123
+          username: ${GIT_USER}
+          password: ${GIT_PASSWORD}
   security:
     user: root
     passord: s3cr3t
