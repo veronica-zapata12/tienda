@@ -1,5 +1,5 @@
 server:
-  port: 8095
+  port: 8099
 sipring:
   cloud:
     config:
@@ -10,5 +10,6 @@ sipring:
           username: ${GIT_USER}
           password: ${GIT_PASSWORD}
   security:
-    user: root
-    passord: s3cr3t
+    user:
+      user: root
+      password: s3cr3t
