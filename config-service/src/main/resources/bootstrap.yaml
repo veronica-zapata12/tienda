@@ -5,5 +5,10 @@ sipring:
     config:
       server:
         git:
-          uri:
+          uri: https://github.com/veronica-zapata12/tienda.git
           searchPath: config-data
+          username: veronica-zapata12
+          password: Sofiazapata123
+  security:
+    user: root
+    passord: s3cr3t
