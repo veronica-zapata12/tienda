@@ -1,5 +1,5 @@
 server:
-  port: 8094
+  port: 8095
 spring:
   profiles:
     active: master
@@ -7,8 +7,9 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/veronica-zapata12/tienda
+          uri: https://github.com/veronica-zapata12/tienda.git
           searchPaths: config-data
+          skipSslValidation: true
 
   security:
     user:
