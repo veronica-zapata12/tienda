@@ -1,16 +1,16 @@
 server:
-  port: 8092
+  port: 8094
 spring:
   h2:
     console:
       enabled:true
   datasource:
-    Url: jdbc:postgresql://localhost:5432/productos
+    Url: jdbc:postgresql://localhost:5432/facturas
     driverClassName: org.postgresql.Driver
     platform: postgres
     username: postgres
     password: 12345
-    #initialization-mode: always
+    initialization-mode: always
 
 
 
@@ -28,4 +28,3 @@ spring:
 loggin:
   pattern:
     console: "%{yyyy-mm-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5P} %M%N"
-
