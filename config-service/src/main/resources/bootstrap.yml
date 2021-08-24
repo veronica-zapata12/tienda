@@ -1,0 +1,16 @@
+server:
+  port: 8094
+spring:
+  profiles:
+    active: master
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/veronica-zapata12/tienda
+          searchPaths: config-data
+
+  security:
+    user:
+      name: root
+      password: s3cr3t
