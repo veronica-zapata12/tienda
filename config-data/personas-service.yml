@@ -29,5 +29,9 @@ spring:
 loggin:
   pattern:
     console: "%{yyyy-mm-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5P} %M%N"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8099/eureka/
 
 
