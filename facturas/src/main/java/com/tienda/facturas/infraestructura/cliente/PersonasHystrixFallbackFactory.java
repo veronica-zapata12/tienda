@@ -4,10 +4,13 @@ import com.tienda.facturas.dominio.modelo.dto.PersonasDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonasHystrixFallbackFactory implements  PersonasCliente{
-    @Override
+public class PersonasHystrixFallbackFactory //implements  PersonasCliente{
+    /*@Override
     public PersonasDto buscarPorId(Long id) {
-        PersonasDto personasDto= new PersonasDto(null,"none");
+        PersonasDto personasDto = null;
+        personasDto.setId(null);
+        personasDto.setNombre("nada");
         return personasDto;
-    }
+    }*/
+{
 }

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@FeignClient(name = "personas-service", fallback = PersonasHystrixFallbackFactory.class)
-
+@FeignClient(name = "personas-service")
+@RequestMapping(value = "/personas")
 public interface PersonasCliente {
     @GetMapping(value = "/{id}")
     public PersonasDto buscarPorId(@PathVariable Long id);
