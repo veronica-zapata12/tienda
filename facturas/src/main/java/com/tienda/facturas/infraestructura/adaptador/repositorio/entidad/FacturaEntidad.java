@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class FacturaEntidad {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "persona_id")
     private Long personaId;

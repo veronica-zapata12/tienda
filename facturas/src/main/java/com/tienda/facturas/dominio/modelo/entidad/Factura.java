@@ -11,6 +11,7 @@ public class Factura {
     private Date fecha;
     private List<DetalleFactura> detalleFactura;
     private Double total=0.0;
+    private Personas personas;
 
     public Factura(Long id, Long personaId, List<DetalleFactura> detalleFactura) {
 

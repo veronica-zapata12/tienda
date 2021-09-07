@@ -1,7 +1,7 @@
 package com.tienda.facturas.infraestructura.adaptador.repositorio;
 
 
-import com.tienda.facturas.dominio.modelo.dto.DetalleFacturaDto;
+
 import com.tienda.facturas.dominio.modelo.entidad.DetalleFactura;
 import com.tienda.facturas.dominio.modelo.entidad.Factura;
 import com.tienda.facturas.dominio.puerto.repositorio.RepositorioFactura;

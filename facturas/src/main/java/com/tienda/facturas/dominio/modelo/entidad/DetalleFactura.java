@@ -12,6 +12,7 @@ public class DetalleFactura {
     private double precio;
 
 
+
     public DetalleFactura(Long id, Double cantidad, Double precio) {
         ValidadorDeArgumento.validarNumeroMayor(cantidad,LA_CATIDAD_DEBE_SER_MAYOR_A_CERO);
         ValidadorDeArgumento.validarPrecioNumeroMayor(precio,EL_PRECIO_DEBE_SER_MAYOR_A_CERO);
