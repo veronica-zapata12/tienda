@@ -1,0 +1,174 @@
+<header id="main-header" class="py-2 bg-info text-white ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>
+                    <i class="fas fa-user"></i>Personas
+                </h1>
+
+            </div>
+        </div>
+    </div>
+</header>
+<section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal"
+                    data-bs-target="#agregarPersona">
+                    <i class="fas fa-plus"></i> Agregar Persona
+                </button>
+            </div>
+            <div class="col-md-2 ml-auto">
+                <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal"
+                    data-bs-target="#buscarPersona">
+                    <i class="fas fa-search"></i> Buscar Persona
+                </button>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+<section id="clientes">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Listado de Personas</h4>
+                    </div>
+                    <table class="table  table-striped " style="margin-bottom: 0px;">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Documento</th>
+                                <th>nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let personas of personas | paginate:{itemsPerPage:10, currentPage:paginaActual}; ">
+                                
+                                <td>{{personas.id}}</td>
+                                <td>{{personas.nombre}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center bg-success text-white mb-3">
+                    <div class="card-body">
+                        <h3>Total De Personas Registradas</h3>
+                        <h4 class="display-4">
+                            <i class="fas fa-users"></i> {{personas?.length}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin: 10px 0;" >
+            <pagination-controls  (pageChange)="paginaActual = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+             </div>
+            
+    </div>
+
+</section>
+
+<!--modal para agregar persona-->
+<div class="modal fade" id="agregarPersona">
+    <div class="modal-dialog modl-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">Agregar Persona</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    #botonCerrar></button>
+            </div>
+            <form [formGroup]="personaForm" (ngSubmit)="crear()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="id">Documento</label>
+                        <input type="text" id="id" name="id" class="form-control" formControlName="id">
+                    </div>
+                    <div *ngIf="form.id.touched && form.id.invalid" class="alert alert-danger">
+                        <div *ngIf="form.id.errors.required">el documento es requerido.</div>
+                        <div *ngIf="form.id.errors?.minlength " class="alert alert-danger">
+                            el documento debe tener minimo 5 caracteres.
+                        </div>
+                        <div *ngIf="form.id.errors?.maxlength " class="alert alert-danger">
+                            el documento debe tener máximo 10 caracteres.
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" formControlName="nombre">
+                    </div>
+                    <div *ngIf="form.nombre.touched && form.nombre.invalid" class="alert alert-danger">
+                        <div *ngIf="form.nombre.errors.required">el nombre es requerido.</div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" [disabled]="!personaForm.valid">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!--modal para buscar persona-->
+<div class="modal fade" id="buscarPersona">
+    <div class="modal-dialog modl-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">Buscar Persona</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    #botonCerrar></button>
+            </div>
+            <form [formGroup]="idForm">
+                <div class="modal-body">
+                    <div class="row">
+                    <div class="col-md-6">
+                        
+                        <input #id type="text" id="id" name="id" class="form-control" formControlName="id" placeholder="Ingrese el documento">
+                    </div>
+                    <div class="col-md-2 ml-auto">
+                    <button type="submit" id="buscar" class="btn btn-primary" (click)="buscarPorId(id.value)"><i
+                            class="fas fa-search"></i> </button>
+                        </div>
+                    </div>
+                    <div *ngIf="buscarPersona">
+                    <div class="form-group">
+                        <label for="id">Documento</label>
+                        <input 
+                        type="text"
+                        id="id" 
+                        name="id" 
+                        class="form-control"
+                        disabled
+                        value="{{buscarPersona.id}}"
+                       >
+                    </div>
+                   
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text"
+                        id="nombre" 
+                        name="nombre" 
+                        class="form-control"
+                        disabled
+                        value="{{buscarPersona.nombre}}">
+                    </div>
+                </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

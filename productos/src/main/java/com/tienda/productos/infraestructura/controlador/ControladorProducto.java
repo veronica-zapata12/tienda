@@ -2,10 +2,11 @@ package com.tienda.productos.infraestructura.controlador;
 
 import com.tienda.productos.aplicacion.comando.ComandoProducto;
 import com.tienda.productos.aplicacion.comando.manejador.ManejadorCrearProducto;
+import com.tienda.productos.aplicacion.consulta.ManejadorConsultaCategorias;
 import com.tienda.productos.aplicacion.consulta.ManejadorConsultaProductosPorId;
 import com.tienda.productos.aplicacion.consulta.ManejadorConsultarProductos;
+import com.tienda.productos.dominio.modelo.dto.CategoriaDto;
 import com.tienda.productos.dominio.modelo.dto.ProductoDto;
-import com.tienda.productos.dominio.modelo.entidad.Producto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,13 +18,15 @@ public class ControladorProducto {
     private final ManejadorCrearProducto manejadorCrearProducto;
     private final ManejadorConsultarProductos manejadorConsultarProductos;
     private final ManejadorConsultaProductosPorId manejadorConsultaProductosPorId;
+    private final ManejadorConsultaCategorias manejadorConsultaCategorias;
 
 
 
-    public ControladorProducto(ManejadorCrearProducto manejadorCrearProducto, ManejadorConsultarProductos manejadorConsultarProductos, ManejadorConsultaProductosPorId manejadorConsultaProductosPorId) {
+    public ControladorProducto(ManejadorCrearProducto manejadorCrearProducto, ManejadorConsultarProductos manejadorConsultarProductos, ManejadorConsultaProductosPorId manejadorConsultaProductosPorId, ManejadorConsultaCategorias manejadorConsultaCategorias) {
         this.manejadorCrearProducto = manejadorCrearProducto;
         this.manejadorConsultarProductos = manejadorConsultarProductos;
         this.manejadorConsultaProductosPorId = manejadorConsultaProductosPorId;
+        this.manejadorConsultaCategorias = manejadorConsultaCategorias;
     }
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
@@ -44,6 +47,10 @@ public class ControladorProducto {
     @GetMapping(value = "/categoria/{id}")
     public List<ProductoDto> consultarPorCategoria(@PathVariable Long id){
         return this.manejadorConsultarProductos.categoria(id);
+    }
+    @GetMapping(value = "/categoria")
+    public List<CategoriaDto> consultarCategorias(){
+        return this.manejadorConsultaCategorias.ejecutar();
     }
 
 }

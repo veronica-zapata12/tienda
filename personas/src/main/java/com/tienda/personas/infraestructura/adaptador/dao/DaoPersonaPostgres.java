@@ -35,4 +35,9 @@ public class DaoPersonaPostgres implements DaoPersonas {
         }
         return personasDtoList;
     }
+
+    @Override
+    public boolean existeId(Long id) {
+        return this.repositorioPersonaJpa.buscarPorId(id) !=null ? true : false;
+    }
 }

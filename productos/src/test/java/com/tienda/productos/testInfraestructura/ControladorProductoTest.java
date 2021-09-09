@@ -20,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Date;
@@ -57,11 +58,11 @@ public class ControladorProductoTest {
     }
 
     @Test
-
+    @Transactional
     public void guardarProducto() throws Exception {
         CategoriaEntidad categoriaEntidad=new CategoriaEntidad(1,"zapatos");
         repositorioCategoriaJpa.save(categoriaEntidad);
-        ComandoProducto comandoProducto=new ComandoProductoDataBuilder().conNombre("nada1").build();
+        ComandoProducto comandoProducto=new ComandoProductoDataBuilder().conNombre("nada123").build();
         mockMvc.perform(post("/productos").contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(comandoProducto)))
                 .andExpect(status().isOk());
@@ -70,7 +71,7 @@ public class ControladorProductoTest {
     @Test
     public void consultarPorId() throws Exception {
 
-        mockMvc.perform(get("/productos/{id}", 2)
+        mockMvc.perform(get("/productos/{id}", 29)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nombre", is("nada1")))
@@ -83,7 +84,7 @@ public class ControladorProductoTest {
         mockMvc.perform(get("/productos")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$", hasSize(20)))
                 .andDo(print());
     }
 }

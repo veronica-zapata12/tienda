@@ -8,4 +8,5 @@ import java.util.List;
 public interface DaoPersonas {
     PersonasDto buscarPorId(Long id);
     List<PersonasDto> listarPersonas();
+    boolean existeId(Long id);
 }
