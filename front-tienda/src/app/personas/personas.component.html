@@ -84,7 +84,7 @@
             <div class="modal-header bg-info text-white">
                 <h5 class="modal-title">Agregar Persona</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    #botonCerrar></button>
+                    #botonCerrar (click)="cerrarModal()"></button>
             </div>
             <form [formGroup]="personaForm" (ngSubmit)="crear()">
                 <div class="modal-body">
@@ -127,7 +127,7 @@
             <div class="modal-header bg-info text-white">
                 <h5 class="modal-title">Buscar Persona</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    #botonCerrar></button>
+                    #botonCerrar (click)="cerrarModal()"></button>
             </div>
             <form [formGroup]="idForm">
                 <div class="modal-body">

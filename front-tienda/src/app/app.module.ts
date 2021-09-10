@@ -20,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PersonasService } from './shared/servicios/personas.service';
 import { HttpService } from './shared/servicios/http.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ProductosService } from './shared/servicios/productos.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     NgxPaginationModule
   ],
-  providers: [PersonasService,HttpService],
+  providers: [PersonasService,HttpService, ProductosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

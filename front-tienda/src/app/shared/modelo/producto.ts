@@ -4,7 +4,7 @@ export interface Producto{
     id?:number,
     nombre:String,
     descripcion:string,
-    fecha?:Date
+    creacion?:string,
     cantidad:number,
     precio:number,
     estado:string,

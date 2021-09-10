@@ -1,1 +1,306 @@
-<p>productos works!</p>
+<header id="main-header" class="py-2 bg-info text-white ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>
+                    <i class="fas fa-shopping-cart"></i>Productos
+                </h1>
+
+            </div>
+        </div>
+    </div>
+</header>
+<section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal"
+                    data-bs-target="#agregarProducto">
+                    <i class="fas fa-plus"></i> Agregar Producto
+                </button>
+            </div>
+            <div class="col-md-2 ml-auto">
+                <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal"
+                    data-bs-target="#buscarProducto">
+                    <i class="fas fa-search"></i> Buscar Producto
+                </button>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+<section id="productos">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Listado de Productos</h4>
+                    </div>
+                    <table class="table  table-striped ">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Categoria</th>
+                                <th>Estado</th>
+                                <th>Fecha Ingreso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let productos of productos | paginate:{itemsPerPage:10, currentPage:paginaActual}; ">
+
+                                <td>{{productos.id}}</td>
+                                <td>{{productos.nombre}}</td>
+                                <td>{{productos.descripcion}}</td>
+                                <td>{{productos.cantidad}}</td>
+                                <td>{{productos.precio}}</td>
+                                <td>{{productos.categoria.nombre}}</td>
+                                <td>{{productos.estado}}</td>
+                                <td>{{productos.creacion}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-md-3 float-right">
+                <div class="card text-center bg-success text-white mb-3">
+                    <div class="card-body">
+                        <h3>Total De Productos Registradas</h3>
+                        <h4 class="display-3">
+                            <i class="fas fa-shopping-cart"></i> {{productos?.length}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin: 10px 0;">
+            <pagination-controls (pageChange)="paginaActual = $event" previousLabel="Anterior" nextLabel="Siguiente">
+            </pagination-controls>
+        </div>
+
+    </div>
+</section>
+
+<!--modal para agregar persona-->
+<div class="modal fade" id="agregarProducto">
+    <div class="modal-dialog modl-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">Agregar Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #botonCerrar
+                    (click)="cerrarModal()"></button>
+            </div>
+            <form [formGroup]="productoForm" (ngSubmit)="crear()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" name="categoria" class=" form-control cont-input-text"
+                            formControlName="categoria">
+                            <option value="" disabled>seleccione la categoria </option>
+                            <option [value]="item.id" *ngFor="let item of categorias">{{item.nombre}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="form.categoria.touched  && form.categoria.invalid " class="alert alert-danger">
+                        <div>la categoria es requerido.</div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" formControlName="nombre">
+                    </div>
+                    <div *ngIf="form.nombre.touched && form.nombre.invalid" class="alert alert-danger">
+                        <div *ngIf="form.nombre.errors.required">el nombre es requerido.</div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripcion</label>
+                        <input type="text" id="descripcion" name="descripcion" class="form-control"
+                            formControlName="descripcion">
+                    </div>
+                    <div *ngIf="form.descripcion.touched && form.descripcion.invalid" class="alert alert-danger">
+                        <div *ngIf="form.descripcion.errors.required">la descripcion es requerido.</div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" id="cantidad" name="cantidad" class="form-control"
+                            formControlName="cantidad">
+                    </div>
+                    <div *ngIf="form.cantidad.touched && form.cantidad.invalid" class="alert alert-danger">
+                        <div *ngIf="form.cantidad.errors.required">la cantidad es requerido.</div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio</label>
+                        <input type="number" id="precio" name="precio" class="form-control" formControlName="precio">
+                    </div>
+                    <div *ngIf="form.precio.touched && form.precio.invalid" class="alert alert-danger">
+                        <div *ngIf="form.precio.errors.required">el precio es requerido.</div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select id="estado" name="estado" class=" form-control cont-input-text"
+                            formControlName="estado">
+                            <option value="" disabled>seleccione el estado </option>
+                            <option [value]="item" *ngFor="let item of estado">{{item}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="form.estado.touched  && form.estado.invalid " class="alert alert-danger">
+                        <div>el estado es requerido.</div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" [disabled]="!productoForm.valid">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!--modal para buscar persona-->
+<div class="modal fade" id="buscarProducto">
+    <div class="modal-dialog modl-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">Buscar Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    #botonCerrar></button>
+            </div>
+            <form [formGroup]="idForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 ml-auto">
+
+                            <select id="metodo" name="metodo" class=" form-control cont-input-text"
+                                formControlName="metodo">
+                                <option value="" disabled>seleccione el metodo </option>
+                                <option value="producto">Producto </option>
+                                <option value="categoria">Productos Por Categoria </option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+
+                            <input #id type="text" id="id" name="id" class="form-control" formControlName="id"
+                                placeholder="Ingrese el ID">
+                        </div>
+                        <div class="col-md-2 ml-auto">
+                            <button type="submit" id="buscar" class="btn btn-primary"
+                                (click)="consultarPorId(id.value)"><i class="fas fa-search"></i> </button>
+                        </div>
+                    </div>
+                    <br>
+                    <div *ngIf="productoEncontrado">
+                        <div class="form-group">
+                            <label for="id">id</label>
+                            <input type="text" id="id" name="id" class="form-control" disabled
+                                value="{{productoEncontrado.id}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" disabled
+                                value="{{productoEncontrado.nombre}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripcion</label>
+                            <input type="text
+                        " id="descripcion" name="descripcion" class="form-control" disabled
+                                value="{{productoEncontrado.descripcion}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad</label>
+                            <input type="number" id="cantidad" name="cantidad" class="form-control" disabled
+                                value="{{productoEncontrado.cantidad}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Precio</label>
+                            <input type="number
+                        " id="precio" name="precio" class="form-control" disabled
+                                value="{{productoEncontrado.precio}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="creacion">Fecha</label>
+                            <input type="text" id="creacion" name="creacion" class="form-control" disabled
+                                value="{{productoEncontrado.creacion}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input type="text" id="estado" name="estado" class="form-control" disabled
+                                value="{{productoEncontrado.estado}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoria</label>
+                            <input type="text" id="categoria" name="categoria" class="form-control" disabled
+                                value="{{productoEncontrado.categoria.nombre}}">
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="row">
+
+
+                        <div class="card" *ngIf=" productoCategoriaEncontrado.length ">
+                            <div class="card-header">
+                                <h4>Productos Por Categoria</h4>
+                            </div>
+                            <table class="table  table-striped " style="margin-bottom: 0px;">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Descripcion</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Categoria</th>
+                                        <th>Estado</th>
+                                        <th>Fecha Ingreso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let productos of productoCategoriaEncontrado  | paginate:{itemsPerPage:6, currentPage:paginaActualBuscar};  ">
+
+                                        <td>{{productos.id}}</td>
+                                        <td>{{productos.nombre}}</td>
+                                        <td>{{productos.descripcion}}</td>
+                                        <td>{{productos.cantidad}}</td>
+                                        <td>{{productos.precio}}</td>
+                                        <td>{{productos.categoria.nombre}}</td>
+                                        <td>{{productos.estado}}</td>
+                                        <td>{{productos.creacion}}</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="margin: 10px 0;">
+                                <pagination-controls (pageChange)="paginaActualBuscar = $event" previousLabel="Anterior"
+                                    nextLabel="Siguiente">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="modal-footer" *ngIf="productoEncontrado">
+                        <button type="submit" class="btn btn-info" (click)="cerrarModal()">Cerrar</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

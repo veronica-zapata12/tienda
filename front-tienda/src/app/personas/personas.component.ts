@@ -29,7 +29,6 @@ getPersonas(){
 crear(){
 
   if(this.personaForm.valid){
-    console.log(this.personaForm.value)
     this.personaService.guardar(this.personaForm.value).subscribe(() => {
       Swal.fire({
         position: 'center',
@@ -59,8 +58,9 @@ private construirFormulario(){
 get form() {
   return this.personaForm.controls;
 }
-private cerrarModal(){
+ cerrarModal(){
   this.botonCerrar.nativeElement.click();
+  this.construirFormulario();
 }
 buscarPorId(id:number){
   this.personaService.consultarPorId(id).subscribe(persona=>{

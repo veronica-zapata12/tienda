@@ -13,7 +13,7 @@ export class PersonasService {
 
   public guardar(persona: Persona) {
  
-    return this.http.doPost(`${environment.endpoint}personas`,persona,this.http.optsName('crear envio'));
+    return this.http.doPost(`${environment.endpoint}personas`,persona,this.http.optsName('crear persona'));
   }
   public consultarTodos() {
     return this.http.doGet<Persona[]>(`${environment.endpoint}personas`);
