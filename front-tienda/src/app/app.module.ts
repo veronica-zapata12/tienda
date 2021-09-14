@@ -6,10 +6,6 @@ import { AppComponent } from './app.component';
 
 import { InicioComponent } from './inicio/inicio.component';
 import { CabeceroComponent } from './cabecero/cabecero.component';
-import { CrearProductoComponent } from './productos/crear-producto/crear-producto.component';
-import { ListarProductoComponent } from './productos/listar-producto/listar-producto.component';
-import { CrearFacturaComponent } from './facturas/crear-factura/crear-factura.component';
-import { ListarFacturasComponent } from './facturas/listar-facturas/listar-facturas.component';
 import { FacturasComponent } from './facturas/facturas.component';
 import { PersonasComponent } from './personas/personas.component';
 import { ProductosComponent } from './productos/productos.component';
@@ -21,6 +17,7 @@ import { PersonasService } from './shared/servicios/personas.service';
 import { HttpService } from './shared/servicios/http.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductosService } from './shared/servicios/productos.service';
+import { FacturasService } from './shared/servicios/facturas.service';
 
 @NgModule({
   declarations: [
@@ -30,10 +27,7 @@ import { ProductosService } from './shared/servicios/productos.service';
     ProductosComponent,
     InicioComponent,
     CabeceroComponent,
-    CrearProductoComponent,
-    ListarProductoComponent,
-    CrearFacturaComponent,
-    ListarFacturasComponent
+   
     
   ],
   imports: [
@@ -45,7 +39,7 @@ import { ProductosService } from './shared/servicios/productos.service';
     ReactiveFormsModule,
     NgxPaginationModule
   ],
-  providers: [PersonasService,HttpService, ProductosService],
+  providers: [PersonasService,HttpService, ProductosService,FacturasService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -47,7 +47,7 @@ crear(){
 }
 private construirFormulario(){
   this.personaForm=new FormGroup({
-    id:new FormControl('', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]),
+    id:new FormControl('', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(5),Validators.maxLength(10)]),
     nombre:new FormControl('', [Validators.required])
   })
   this.idForm=new FormGroup({

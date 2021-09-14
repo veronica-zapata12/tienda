@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-6">
                 <h1>
-                    <i class="fas fa-shopping-cart"></i>Productos
+                    <i class="fas fa-shopping-cart"></i> Productos
                 </h1>
 
             </div>
@@ -93,7 +93,7 @@
 
 <!--modal para agregar persona-->
 <div class="modal fade" id="agregarProducto">
-    <div class="modal-dialog modl-lg">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
                 <h5 class="modal-title">Agregar Producto</h5>
@@ -170,39 +170,60 @@
     </div>
 </div>
 
-<!--modal para buscar persona-->
+<!--modal para buscar productos-->
 <div class="modal fade" id="buscarProducto">
-    <div class="modal-dialog modl-lg">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
                 <h5 class="modal-title">Buscar Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                    #botonCerrar></button>
+                    #botonCerrar (click)="cerrarModal()"></button>
             </div>
             <form [formGroup]="idForm">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-5 ml-auto">
+                        
+                        <div class="col-md-5">
 
-                            <select id="metodo" name="metodo" class=" form-control cont-input-text"
-                                formControlName="metodo">
-                                <option value="" disabled>seleccione el metodo </option>
+                            <select #idSelec id="metodo" name="metodo" class=" form-control cont-input-text"
+                                formControlName="metodo" (click)="habilitar(idSelec.value)">
+                                <option value="" disabled>seleccione el metodo de busqueda </option>
                                 <option value="producto">Producto </option>
                                 <option value="categoria">Productos Por Categoria </option>
                             </select>
                         </div>
-                        <div class="col-md-5">
+                    <br>
+                    <br>
+                        <div class="row" *ngIf="habilitarProducto">
+                        <div class="col-md-4" >
 
                             <input #id type="text" id="id" name="id" class="form-control" formControlName="id"
-                                placeholder="Ingrese el ID">
+                                placeholder="Ingrese el ID" >
                         </div>
-                        <div class="col-md-2 ml-auto">
+                        <div class="col-md-2 ml-auto" >
                             <button type="submit" id="buscar" class="btn btn-primary"
                                 (click)="consultarPorId(id.value)"><i class="fas fa-search"></i> </button>
                         </div>
+</div>
+                        <div class="row" *ngIf="habilitarCategoria">
+                        <div class="col-md-4" >
+                            <select #id id="id" name="categoria" class=" form-control cont-input-text" formControlName="id"   
+                                >
+                                <option value="" disabled>seleccione la categoria </option>
+                                <option [value]="item.id" *ngFor="let item of categorias">{{item.nombre}}</option>
+                            </select>
+                        </div>
+                            <div class="col-md-2 ml-auto" >
+                                <button type="submit" id="buscar" class="btn btn-primary"
+                                    (click)="consultarPorId(id.value)"><i class="fas fa-search"></i> </button>
+                            </div>
+
+                        
+                    </div>
+
                     </div>
                     <br>
-                    <div *ngIf="productoEncontrado">
+                    <div *ngIf="productoEncontrado && habilitarProducto">
                         <div class="form-group">
                             <label for="id">id</label>
                             <input type="text" id="id" name="id" class="form-control" disabled
@@ -252,7 +273,7 @@
                     <div class="row">
 
 
-                        <div class="card" *ngIf=" productoCategoriaEncontrado.length ">
+                        <div class="card" *ngIf=" productoCategoriaEncontrado.length && habilitarCategoria ">
                             <div class="card-header">
                                 <h4>Productos Por Categoria</h4>
                             </div>
@@ -291,7 +312,7 @@
                                 </pagination-controls>
                             </div>
                         </div>
-                        
+
                     </div>
 
                     <div class="modal-footer" *ngIf="productoEncontrado">

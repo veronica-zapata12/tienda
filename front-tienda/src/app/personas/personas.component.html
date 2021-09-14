@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-6">
                 <h1>
-                    <i class="fas fa-user"></i>Personas
+                    <i class="fas fa-user"></i> Personas
                 </h1>
 
             </div>
@@ -79,7 +79,7 @@
 
 <!--modal para agregar persona-->
 <div class="modal fade" id="agregarPersona">
-    <div class="modal-dialog modl-lg">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
                 <h5 class="modal-title">Agregar Persona</h5>
@@ -100,6 +100,9 @@
                         <div *ngIf="form.id.errors?.maxlength " class="alert alert-danger">
                             el documento debe tener máximo 10 caracteres.
                         </div>
+                        <div *ngIf="form.id.errors?.pattern " class="alert alert-danger">
+                            el documento solo debe tener numeros .
+                        </div>
 
                     </div>
                     <div class="form-group">
@@ -109,7 +112,9 @@
                     <div *ngIf="form.nombre.touched && form.nombre.invalid" class="alert alert-danger">
                         <div *ngIf="form.nombre.errors.required">el nombre es requerido.</div>
 
-                    </div>
+                    
+                    
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" [disabled]="!personaForm.valid">Guardar</button>
@@ -122,7 +127,7 @@
 
 <!--modal para buscar persona-->
 <div class="modal fade" id="buscarPersona">
-    <div class="modal-dialog modl-lg">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
                 <h5 class="modal-title">Buscar Persona</h5>

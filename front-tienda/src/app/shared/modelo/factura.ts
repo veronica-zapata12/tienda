@@ -7,6 +7,6 @@ export interface Factura{
     fecha?:Date
     total?:number,
     pesona?:Persona
-    detallesFactura: Array<DetallesFactura>;
+    detalleFactura: DetallesFactura[];
 
 }

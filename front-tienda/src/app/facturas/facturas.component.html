@@ -1,1 +1,202 @@
-<p>facturas works!</p>
+<header id="main-header" class="py-2 bg-info text-white ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>
+                    <i class="fas fa-file-invoice-dollar"> Facturas</i>
+                </h1>
+
+            </div>
+        </div>
+    </div>
+</header>
+<section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal"
+                    data-bs-target="#agregarFactura">
+                    <i class="fas fa-plus"></i> Agregar Factura
+                </button>
+            </div>
+            <div class="col-md-2 ml-auto">
+                <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal"
+                    data-bs-target="#buscarProducto">
+                    <i class="fas fa-search"></i> Buscar Factura
+                </button>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+<section id="facturas">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Listado de Facturas</h4>
+                    </div>
+                    <table class="table  table-striped ">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>ID Persona</th>
+                                <th>Nombre Persona</th>
+                                <th>Total</th>
+                                <th>Detalles</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let facturas of facturas | paginate:{itemsPerPage:10, currentPage:paginaActual}; ">
+
+                                <td>{{facturas.id}}</td>
+                                <td>{{facturas.fecha}}</td>
+                                <td>{{facturas.personaId}}</td>
+                                <td>{{facturas.persona.nombre}}</td>
+                                <td>{{facturas.total}}</td>
+                                <td> <button data-bs-toggle="modal" data-bs-target="#detallesFactura"
+                                        (click)="detalles(facturas.id)" class="btn btn-secondary"><i
+                                            class="fas fa-search"></i></button></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-md-3 float-right">
+                <div class="card text-center bg-success text-white mb-3">
+                    <div class="card-body">
+                        <h3>Total De Facturas Registradas</h3>
+                        <h4 class="display-3">
+                            <i class="fas fa-shopping-cart"></i> {{facturas?.length}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin: 10px 0;">
+            <pagination-controls (pageChange)="paginaActual = $event" previousLabel="Anterior" nextLabel="Siguiente">
+            </pagination-controls>
+        </div>
+
+    </div>
+</section>
+<!--modal para Detalles factura-->
+<div class="modal fade" id="detallesFactura">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">Detalles Factura</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #botonCerrar
+                    (click)="cerrarModal()"></button>
+            </div>
+
+            <div class="card">
+
+                <table class="table  table-striped " style="margin-bottom: 0px;">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID Detalle</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Sub Total</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let factura of detallesFactura  ">
+
+                            <td>{{factura.id}}</td>
+                            <td>{{factura.cantidad}}</td>
+                            <td>{{factura.precio}}</td>
+                            <td>{{factura.cantidad*factura.precio}}</td>
+
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal()" >cerrar</button>
+            </div>
+        </div>
+       
+
+    </div>
+
+
+</div>
+<!--modal para agregar Factura-->
+<div class="modal fade" id="agregarFactura">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">Agregar Factura</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #botonCerrar2
+                    (click)="cerrarModal2()"></button>
+            </div>
+            <form [formGroup]="facturaForm" (submit)="submit()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="personaId">ID Persona</label>
+                        <input type="text" id="personaId" name="personaId" class="form-control"
+                            formControlName="personaId">
+                    </div>
+                    <div *ngIf=" form.personaId.touched && form.personaId.invalid" class="alert alert-danger">
+                        <div *ngIf="form.personaId.errors?.required">el id de la persona es requerido.</div>
+                        <div *ngIf="form.personaId.errors?.minlength " class="alert alert-danger">
+                            el documento debe tener minimo 5 caracteres.
+                        </div>
+                        <div *ngIf="form.personaId.errors?.maxlength " class="alert alert-danger">
+                            el documento debe tener máximo 10 caracteres.
+                        </div>
+                        <div *ngIf="form.personaId.errors.pattern " class="alert alert-danger">
+                            el documento solo debe tener numeros .
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-primary" style="margin: 10px 0;" (click)="agregarDetalle()">Agregar</a>
+                    </div>
+                    <div formArrayName="detalleFactura" *ngFor="let detalle of detalle.controls; let i = index">
+
+                        <div [formGroupName]="i">
+                            <div class="form-group row">
+                                <label class="col-sm-2" [attr.for]="'cantidad' + i">Cantidad</label>
+                                <div class="col-sm-3">
+                                    <input type="text" [attr.id]="'cantidad' + i" class="form-control"
+                                        formControlName="cantidad">
+                                </div>
+                                <label class="col-sm-2" [attr.for]="'precio' + i">Precio</label>
+                                <div class="col-sm-3">
+                                    <input type="text" [attr.id]="'precio' + i" class="form-control"
+                                        formControlName="precio">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-danger" (click)="removerDetalle(i)"><i
+                                            class="fas fa-trash-alt" description="Remover"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" [disabled]="facturaForm.invalid">Enviar</button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
