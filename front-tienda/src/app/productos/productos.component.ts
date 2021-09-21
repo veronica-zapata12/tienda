@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Categoria } from '../shared/modelo/categoria';
 import { Producto } from '../shared/modelo/producto';
@@ -16,12 +17,15 @@ export class ProductosComponent implements OnInit {
   habilitarProducto: boolean;
   habilitarCategoria: boolean;
   productos: Producto[] = [];
-  categorias: Categoria[];
+  categorias: Categoria[]=[];
   addCategoria: Categoria = {
     id: 0,
     nombre: ""
 
   };
+  aux=[]
+  aux2:Categoria;
+  categorias2: Observable<Categoria[]>;
   paginaActual = 1;
   paginaActualBuscar = 1;
   productoForm: FormGroup;
@@ -49,10 +53,59 @@ export class ProductosComponent implements OnInit {
     })
   }
   crear() {
-    this.validarCategoria();
+    //this.validarCategoria();
+    //console.log(this.productoForm.value);
+    let cat = this.productoForm.get('categoria').value
+    this.productoService.consultarTodosCategoria().subscribe((categoria:Categoria[]) => {
+      this.categorias = categoria
+      console.log(this.categorias);
+      let catt = this.categorias.filter(x => x.id == cat)
+      console.log(catt[0].id);
+      console.log(catt[0].nombre);
+      this.addCategoria.id=catt[0].id;
+      this.addCategoria.nombre=catt[0].nombre
+      console.log(this.addCategoria);
+      
+      this.aux.push(this.addCategoria)
+      this.aux2=this.addCategoria;
+      //this.aux2.nombre=catt[0].nombre;
 
-    console.log(this.productoForm.value);
+     this.productoForm.get('categoria').setValue(this.aux)
+     console.log(this.productoForm.get('categoria').value);
+     
+       console.log(this.productoForm.value);
+      
 
+    
+    }); 
+    console.log(this.addCategoria);
+    ;
+    
+   
+    /*this.categorias2=this.productoService.consultarTodosCategoria();
+    let uno=this.categorias2.forEach(categoria=>
+    //this.aux.push(categoria)
+    console.log(categoria.length)
+    
+    );
+
+    let cat:number=0
+    console.log(uno)
+     cat = this.productoForm.get('categoria').value
+     let i=2;
+    console.log(cat);
+    this.aux2=this.aux;
+    let catt = this.aux2.findIndex(x => x.id == i);
+    let oo=this.aux2[0];
+    console.log(this.aux)
+    //console.log(oo);
+    console.log(this.aux.length);*/
+    
+    
+    
+    //return this.aux
+    
+   
     this.productoService.crear(this.productoForm.value).subscribe(() => {
       Swal.fire({
         position: 'center',
@@ -67,7 +120,7 @@ export class ProductosComponent implements OnInit {
 
     this.cerrarModal();
     this.construirFormulario();
-   
+  
 
   }
   habilitar(nombre: String) {
@@ -82,18 +135,30 @@ export class ProductosComponent implements OnInit {
         this.habilitarProducto = false;
       }
   }
-  validarCategoria() {
+ 
+ validarCategoria() {
     const cat = this.productoForm.get('categoria').value
-    this.productoService.consultarTodosCategoria().subscribe(categoria => {
+    console.log(cat);
+    
+    this.productoService.consultarTodosCategoria().forEach((categoria:Categoria[]) => {
       this.categorias = categoria
-      let catt = this.categorias.filter(x => x.id == cat)
-      this.addCategoria.id = catt[0].id;
+      const catt = this.categorias.filter(x => x.id == cat);
+      console.log(catt);
+      //this.categorias2= this.categorias.filter(x => x.id == cat)
+      this.addCategoria.id= catt[0].id;
       this.addCategoria.nombre = catt[0].nombre;
+      this.aux=catt;
+      
 
+    console.log(this.categorias2);
 
-
+    
     });
-    this.productoForm.get('categoria').setValue(this.addCategoria)
+    this.productoForm.get('categoria').setValue(this.aux);
+    console.log(this.productoForm.get('categoria').value);
+    
+    
+    
   }
 
   consultarPorId(id: number) {
