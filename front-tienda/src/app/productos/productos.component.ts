@@ -17,14 +17,14 @@ export class ProductosComponent implements OnInit {
   habilitarProducto: boolean;
   habilitarCategoria: boolean;
   productos: Producto[] = [];
-  categorias: Categoria[]=[];
+  categorias: Categoria[] = [];
   addCategoria: Categoria = {
     id: 0,
     nombre: ""
 
   };
-  aux=[]
-  aux2:Categoria;
+  aux = []
+  aux2: Categoria;
   categorias2: Observable<Categoria[]>;
   paginaActual = 1;
   paginaActualBuscar = 1;
@@ -33,7 +33,7 @@ export class ProductosComponent implements OnInit {
   productoEncontrado: Producto;
   productoCategoriaEncontrado: Categoria[] = [];
   @ViewChild("botonCerrar") botonCerrar: ElementRef;
-  constructor(protected productoService: ProductosService) { }
+  constructor(private productoService: ProductosService) { }
 
   ngOnInit(): void {
     this.getProductos();
@@ -53,59 +53,7 @@ export class ProductosComponent implements OnInit {
     })
   }
   crear() {
-    //this.validarCategoria();
-    //console.log(this.productoForm.value);
-    let cat = this.productoForm.get('categoria').value
-    this.productoService.consultarTodosCategoria().subscribe((categoria:Categoria[]) => {
-      this.categorias = categoria
-      console.log(this.categorias);
-      let catt = this.categorias.filter(x => x.id == cat)
-      console.log(catt[0].id);
-      console.log(catt[0].nombre);
-      this.addCategoria.id=catt[0].id;
-      this.addCategoria.nombre=catt[0].nombre
-      console.log(this.addCategoria);
-      
-      this.aux.push(this.addCategoria)
-      this.aux2=this.addCategoria;
-      //this.aux2.nombre=catt[0].nombre;
-
-     this.productoForm.get('categoria').setValue(this.aux)
-     console.log(this.productoForm.get('categoria').value);
-     
-       console.log(this.productoForm.value);
-      
-
-    
-    }); 
-    console.log(this.addCategoria);
-    ;
-    
-   
-    /*this.categorias2=this.productoService.consultarTodosCategoria();
-    let uno=this.categorias2.forEach(categoria=>
-    //this.aux.push(categoria)
-    console.log(categoria.length)
-    
-    );
-
-    let cat:number=0
-    console.log(uno)
-     cat = this.productoForm.get('categoria').value
-     let i=2;
-    console.log(cat);
-    this.aux2=this.aux;
-    let catt = this.aux2.findIndex(x => x.id == i);
-    let oo=this.aux2[0];
-    console.log(this.aux)
-    //console.log(oo);
-    console.log(this.aux.length);*/
-    
-    
-    
-    //return this.aux
-    
-   
+    console.log(this.productoForm.value);
     this.productoService.crear(this.productoForm.value).subscribe(() => {
       Swal.fire({
         position: 'center',
@@ -119,8 +67,9 @@ export class ProductosComponent implements OnInit {
     });
 
     this.cerrarModal();
-    this.construirFormulario();
-  
+
+
+
 
   }
   habilitar(nombre: String) {
@@ -134,31 +83,6 @@ export class ProductosComponent implements OnInit {
         this.habilitarCategoria = true;
         this.habilitarProducto = false;
       }
-  }
- 
- validarCategoria() {
-    const cat = this.productoForm.get('categoria').value
-    console.log(cat);
-    
-    this.productoService.consultarTodosCategoria().forEach((categoria:Categoria[]) => {
-      this.categorias = categoria
-      const catt = this.categorias.filter(x => x.id == cat);
-      console.log(catt);
-      //this.categorias2= this.categorias.filter(x => x.id == cat)
-      this.addCategoria.id= catt[0].id;
-      this.addCategoria.nombre = catt[0].nombre;
-      this.aux=catt;
-      
-
-    console.log(this.categorias2);
-
-    
-    });
-    this.productoForm.get('categoria').setValue(this.aux);
-    console.log(this.productoForm.get('categoria').value);
-    
-    
-    
   }
 
   consultarPorId(id: number) {
@@ -183,11 +107,11 @@ export class ProductosComponent implements OnInit {
         }
       });
       this.construirFormulario();
-      
+
     } else {
-      this.productoEncontrado=null;
+      this.productoEncontrado = null;
       if (metodo === "categoria") {
-        
+
         this.productoService.consultarProductosPorCategoria(id).subscribe(producto => {
           this.productoCategoriaEncontrado = producto;
           if (this.productoCategoriaEncontrado.length <= 0) {
@@ -204,8 +128,8 @@ export class ProductosComponent implements OnInit {
           }//
         });
 
-      
-      
+
+
       }
       this.construirFormulario();
 
@@ -214,7 +138,7 @@ export class ProductosComponent implements OnInit {
 
     }
 
-    
+
 
 
   }
@@ -243,8 +167,8 @@ export class ProductosComponent implements OnInit {
   cerrarModal() {
     this.botonCerrar.nativeElement.click();
     this.construirFormulario();
-    this.habilitarCategoria=false;
-    this.habilitarProducto=false;
+    this.habilitarCategoria = false;
+    this.habilitarProducto = false;
     this.productoEncontrado = null;
     this.productoCategoriaEncontrado = [];
   }

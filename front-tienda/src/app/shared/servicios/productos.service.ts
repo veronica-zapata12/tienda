@@ -14,7 +14,7 @@ export class ProductosService {
   public crear(producto: Producto) {
  
  
-    return this.http.doPost(`${environment.endpoint}productos`,producto,this.http.optsName('crear envio'));
+    return this.http.doPost(`${environment.endpoint}productos`,producto,this.http.optsName('crear producto'));
   }
   public consultarTodosProductos() {
     return this.http.doGet<Producto[]>(`${environment.endpoint}productos`);

@@ -107,7 +107,7 @@
                         <select id="categoria" name="categoria" class=" form-control cont-input-text"
                             formControlName="categoria">
                             <option value="" disabled>seleccione la categoria </option>
-                            <option [value]="item.id" *ngFor="let item of categorias">{{item.nombre}}</option>
+                            <option [ngValue]="item" *ngFor="let item of categorias">{{item.nombre}}</option>
                         </select>
                     </div>
                     <div *ngIf="form.categoria.touched  && form.categoria.invalid " class="alert alert-danger">
